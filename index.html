@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Henry Sigana — GB ICT Solutions</title>
+<meta name="description" content="Wilson Henry Sigana — Founder & Developer at GB ICT Solutions. Building POS, M-Pesa and business management systems for Nairobi SMEs.">
+<link rel="icon" type="image/jpeg" href="assets/profile.jpg">
+<meta property="og:title" content="Wilson Henry Sigana — GB ICT Solutions">
+<meta property="og:description" content="Founder & Developer building POS, M-Pesa and business management systems for Nairobi SMEs.">
+<meta property="og:image" content="assets/dashboard.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Wilson Henry Sigana — GB ICT Solutions">
+<meta name="twitter:description" content="Founder & Developer building POS, M-Pesa and business management systems for Nairobi SMEs.">
+<meta name="twitter:image" content="assets/dashboard.png">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+  :root{
+    --paper: #f6f4ee;
+    --paper-dim: #efece2;
+    --ink: #1c1e1b;
+    --charcoal: #2a2d28;
+    --charcoal-2: #23261f;
+    --mpesa: #00a651;
+    --mpesa-dark: #007a3d;
+    --gold: #c9a227;
+    --line: #d8d3c4;
+    --muted: #6b6a60;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior: smooth; }
+
+  body{
+    background: var(--charcoal);
+    color: var(--ink);
+    font-family: 'Space Grotesk', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  img{ max-width:100%; display:block; }
+  a{ color:inherit; }
+  button{ font-family: inherit; }
+
+  /* NAV */
+  .nav-wrap{
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: linear-gradient(180deg, var(--charcoal) 70%, transparent);
+    padding: 14px 16px 0;
+  }
+  .nav-inner{
+    max-width: 900px;
+    margin: 0 auto;
+    display:flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--paper);
+    border-radius: 8px 8px 0 0;
+    padding: 6px 6px 0;
+    overflow-x: auto;
+    font-family: 'JetBrains Mono', monospace;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.25);
+  }
+  .nav-brand{
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--charcoal);
+    padding: 10px 14px 10px 10px;
+    white-space: nowrap;
+    display:flex;
+    align-items:center;
+    gap: 8px;
+  }
+  .nav-brand .sq{
+    width: 9px; height:9px;
+    background: var(--mpesa);
+    border-radius: 2px;
+    flex-shrink:0;
+  }
+  .nav-links{ display:flex; gap:2px; margin-left:auto; }
+  .nav-btn{
+    background: transparent;
+    border: none;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 12.5px;
+    letter-spacing: 0.03em;
+    color: var(--muted);
+    padding: 12px 14px;
+    cursor: pointer;
+    border-radius: 6px 6px 0 0;
+    white-space: nowrap;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .nav-btn:hover{ color: var(--ink); background: rgba(0,0,0,0.03); }
+  .nav-btn.active{ background: #fff; color: var(--mpesa-dark); }
+  .nav-btn:focus-visible{ outline: 2px solid var(--mpesa); outline-offset: -2px; }
+
+  .wrap{
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 16px 100px;
+  }
+
+  /* HERO */
+  .hero{
+    background: var(--paper);
+    position: relative;
+    padding: 56px 44px 60px;
+    box-shadow: 0 30px 60px -20px rgba(0,0,0,0.6);
+    text-align:center;
+  }
+  .hero::after{
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: -7px;
+    height: 14px;
+    background: radial-gradient(circle at 10px 7px, var(--charcoal) 7px, transparent 7.5px) repeat-x;
+    background-size: 20px 14px;
+    transform: rotate(180deg);
+  }
+
+  .hero-photo{
+    width: 128px; height: 128px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 24px;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 3px var(--mpesa), 0 12px 30px -8px rgba(0,0,0,0.4);
+  }
+
+  .r-eyebrow{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--mpesa-dark);
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  .r-name{
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: clamp(32px, 6vw, 46px);
+    letter-spacing: -0.02em;
+    line-height: 1.08;
+    margin-top: 14px;
+  }
+
+  .r-role{
+    font-size: 14px;
+    color: var(--charcoal);
+    font-weight: 600;
+    margin-top: 10px;
+  }
+
+  .r-tagline{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13.5px;
+    color: var(--muted);
+    margin-top: 18px;
+    line-height: 1.7;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .r-status{
+    margin-top: 22px;
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--muted);
+  }
+  .r-status .dot{
+    display:inline-block;
+    width:7px; height:7px;
+    border-radius:50%;
+    background: var(--mpesa);
+    margin-right:7px;
+    box-shadow: 0 0 0 3px rgba(0,166,81,0.15);
+  }
+
+  .r-cta{
+    margin-top: 30px;
+    display:flex;
+    justify-content:center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .stats-bar{
+    background: var(--charcoal);
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background-color: rgba(255,255,255,0.06);
+  }
+  .stat{
+    background: var(--charcoal-2);
+    padding: 20px 10px;
+    text-align:center;
+  }
+  .stat-num{
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--mpesa);
+  }
+  .stat-label{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-top: 4px;
+  }
+
+  @media (max-width: 560px){
+    .stats-bar{ grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* PAGES */
+  .page{
+    display:none;
+    background: var(--paper);
+    padding: 44px 44px 48px;
+    margin-top: 2px;
+    animation: fadeIn 0.3s ease;
+  }
+  .page.active{ display:block; }
+
+  @keyframes fadeIn{
+    from{ opacity:0; transform: translateY(8px); }
+    to{ opacity:1; transform: translateY(0); }
+  }
+
+  .s-head{
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--charcoal);
+    padding: 4px 0 22px;
+    display:flex;
+    align-items:center;
+    gap: 12px;
+  }
+  .s-head::after{ content:""; flex:1; height:1px; background: var(--line); }
+  .page .s-head:not(:first-child){ padding-top: 40px; }
+
+  .about-text{
+    font-size: 15.5px;
+    line-height: 1.8;
+    color: var(--charcoal);
+    max-width: 600px;
+  }
+  .about-text + .about-text{ margin-top: 16px; }
+
+  /* BIO layout with photo */
+  .bio-grid{
+    display:grid;
+    grid-template-columns: 1fr 220px;
+    gap: 36px;
+    align-items: start;
+  }
+  .bio-photo{
+    border-radius: 8px;
+    overflow:hidden;
+    box-shadow: 0 16px 34px -14px rgba(0,0,0,0.35);
+    border: 1px solid var(--line);
+  }
+  .bio-photo img{ width:100%; height:100%; object-fit:cover; }
+
+  @media (max-width: 680px){
+    .bio-grid{ grid-template-columns: 1fr; }
+    .bio-photo{ max-width: 220px; margin: 0 auto; }
+  }
+
+  /* PROJECT CARDS */
+  .project-grid{
+    display:grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .project-card{
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fff;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .project-card:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 20px 40px -18px rgba(0,0,0,0.3);
+  }
+
+  .project-card.featured{
+    border-color: var(--mpesa);
+  }
+
+  .pc-media{
+    position: relative;
+    aspect-ratio: 16/9;
+    background: var(--charcoal-2);
+    overflow: hidden;
+    cursor: zoom-in;
+  }
+  .pc-media img{
+    width:100%; height:100%; object-fit: cover; object-position: top;
+    transition: transform 0.35s ease;
+  }
+  .project-card:hover .pc-media img{ transform: scale(1.04); }
+
+  .pc-media.placeholder{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor: default;
+    background:
+      repeating-linear-gradient(45deg, var(--paper-dim) 0px, var(--paper-dim) 10px, #fff 10px, #fff 20px);
+  }
+  .pc-media.placeholder span{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: var(--paper);
+    padding: 6px 12px;
+    border-radius: 4px;
+    border: 1px solid var(--line);
+  }
+
+  .pc-gallery-dots{
+    position:absolute;
+    bottom: 10px; left: 0; right:0;
+    display:flex; justify-content:center; gap:6px;
+  }
+  .pc-dot{
+    width:6px; height:6px; border-radius:50%;
+    background: rgba(255,255,255,0.45);
+    cursor:pointer;
+    border: none;
+    padding:0;
+  }
+  .pc-dot.active{ background:#fff; }
+
+  .pc-body{ padding: 18px 20px 20px; }
+  .pc-top{
+    display:flex;
+    justify-content: space-between;
+    align-items:flex-start;
+    gap: 12px;
+  }
+  .pc-name{
+    font-weight: 700;
+    font-size: 16.5px;
+    color: var(--ink);
+  }
+  .pc-tag{
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--mpesa-dark);
+    font-weight: 700;
+    font-size: 10.5px;
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: rgba(0,166,81,0.1);
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin-top: 2px;
+  }
+  .pc-desc{
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--muted);
+    font-size: 12.5px;
+    margin-top: 8px;
+    line-height: 1.6;
+  }
+  .pc-stack{
+    display:flex; flex-wrap:wrap; gap:6px;
+    margin-top: 14px;
+  }
+  .pc-chip{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    padding: 4px 9px;
+    background: var(--paper-dim);
+    border-radius: 3px;
+    color: var(--charcoal);
+  }
+
+  /* SKILLS TAGS */
+  .tag-row{ display:flex; flex-wrap:wrap; gap: 8px; }
+  .tag{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    padding: 8px 13px;
+    border: 1px solid var(--line);
+    color: var(--charcoal);
+    background: #fff;
+    border-radius: 4px;
+  }
+  .tag.core{ background: var(--mpesa); border-color: var(--mpesa); color: #fff; }
+
+  /* TIMELINE */
+  .tl-item{
+    display:flex; gap: 20px;
+    padding: 18px 0;
+    border-bottom: 1px dashed var(--line);
+  }
+  .tl-item:last-child{ border-bottom:none; }
+  .tl-date{
+    flex: 0 0 96px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    color: var(--mpesa-dark);
+    font-weight: 700;
+    padding-top: 2px;
+  }
+  .tl-body{ flex:1; }
+  .tl-title{ font-weight: 700; font-size: 15px; color: var(--ink); }
+  .tl-org{ font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted); margin-top: 3px; }
+  .tl-desc{ font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: var(--charcoal); margin-top: 8px; line-height: 1.65; }
+
+  /* CONTACT */
+  .total-block{ margin-top: 8px; padding-top: 20px; border-top: 2px solid var(--charcoal); font-family: 'JetBrains Mono', monospace; }
+  .total-row{ display:flex; justify-content: space-between; font-size: 13px; padding: 7px 0; }
+  .total-row.grand{ font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 16px; padding-top: 12px; }
+
+  .contact-links{ margin-top: 28px; display:flex; flex-wrap: wrap; gap: 10px; }
+  .btn{
+    display:inline-flex; align-items:center; gap:6px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    padding: 13px 22px;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    border: none;
+    cursor: pointer;
+  }
+  .btn:hover{ transform: translateY(-2px); }
+  .btn.primary{ background: var(--mpesa); color: #fff; box-shadow: 0 8px 18px -8px rgba(0,166,81,0.6); }
+  .btn.ghost{ background: transparent; border: 1px solid var(--charcoal); color: var(--charcoal); }
+
+  .r-barcode{ text-align:center; margin-top: 34px; letter-spacing: 3px; font-size: 22px; color: var(--charcoal); opacity: 0.85; font-family: 'JetBrains Mono', monospace; }
+  .r-endnote{ text-align:center; font-size: 10.5px; color: var(--muted); margin-top: 10px; letter-spacing: 0.08em; font-family: 'JetBrains Mono', monospace; }
+
+  /* LIGHTBOX */
+  .lightbox{
+    position: fixed; inset:0;
+    background: rgba(15,16,13,0.92);
+    display:none;
+    align-items:center; justify-content:center;
+    z-index: 200;
+    padding: 40px 20px;
+    cursor: zoom-out;
+  }
+  .lightbox.open{ display:flex; }
+  .lightbox img{
+    max-width: 100%; max-height: 100%;
+    border-radius: 6px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+  }
+  .lightbox-close{
+    position:absolute; top: 20px; right: 24px;
+    background: rgba(255,255,255,0.1);
+    color:#fff; border:none;
+    width:38px; height:38px; border-radius:50%;
+    font-size: 18px; cursor:pointer;
+  }
+
+  @media (max-width: 640px){
+    .hero, .page{ padding-left: 24px; padding-right: 24px; }
+    .nav-btn{ font-size: 11px; padding: 10px 10px; }
+    .nav-brand{ display:none; }
+    .tl-item{ flex-direction: column; gap: 4px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .btn, .page, .project-card, .pc-media img{ transition:none; animation:none; }
+  }
+
+  @media print{
+    .nav-wrap, .lightbox{ display:none; }
+    .page{ display:block !important; }
+    body{ background:#fff; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav-wrap">
+  <div class="nav-inner">
+    <div class="nav-brand"><span class="sq"></span>GB ICT</div>
+    <div class="nav-links">
+      <button class="nav-btn active" data-page="home">Home</button>
+      <button class="nav-btn" data-page="bio">Bio</button>
+      <button class="nav-btn" data-page="projects">Projects</button>
+      <button class="nav-btn" data-page="resume">Resume</button>
+      <button class="nav-btn" data-page="contact">Contact</button>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <!-- HOME -->
+  <div class="page active" id="home">
+    <div class="hero">
+      <img class="hero-photo" src="assets/profile.jpg" alt="Wilson Henry Sigana">
+      <div class="r-eyebrow">GB ICT Solutions · Nairobi, Kenya</div>
+      <div class="r-name">Wilson Henry Sigana</div>
+      <div class="r-role">Founder &amp; Developer</div>
+      <div class="r-tagline">
+        I build business management systems — POS, M-Pesa, hospitality,
+        pharmacy, construction — and ship them straight to the shop floor.
+      </div>
+      <div class="r-status"><span class="dot"></span>Available for client builds</div>
+      <div class="r-cta">
+        <button class="btn primary" data-goto="projects">View Projects</button>
+        <button class="btn ghost" data-goto="resume">View Resume</button>
+      </div>
+    </div>
+    <div class="stats-bar">
+      <div class="stat"><div class="stat-num">11+</div><div class="stat-label">Systems Shipped</div></div>
+      <div class="stat"><div class="stat-num">8+</div><div class="stat-label">Client Deployments</div></div>
+      <div class="stat"><div class="stat-num">3+</div><div class="stat-label">Years Building</div></div>
+      <div class="stat"><div class="stat-num">100%</div><div class="stat-label">M-Pesa Integrated</div></div>
+    </div>
+  </div>
+
+  <!-- BIO -->
+  <div class="page" id="bio">
+    <div class="s-head">Bio</div>
+    <div class="bio-grid">
+      <div>
+        <p class="about-text">
+          I run GB ICT Solutions — a cyber cafe and M-Pesa agency in Nairobi — and I
+          also build the software that keeps it running. That dual life is the whole
+          practice: every tool I ship gets used at my own counter first, long before
+          a client ever sees it.
+        </p>
+        <p class="about-text">
+          What started as managing my own till and shop records turned into a habit
+          of building small, focused tools whenever something was slow or manual.
+          Over time that habit became a portfolio: retail POS, pharmacy stock,
+          construction site tracking, hospitality management, property listings —
+          each one solving a real problem I'd either hit myself or watched a
+          neighbouring business struggle with.
+        </p>
+        <p class="about-text">
+          My stack is deliberately plain — vanilla JavaScript, Supabase for
+          real-time sync, GitHub Pages and Netlify for deployment. No unnecessary
+          frameworks, just fast tools that survive patchy Nairobi internet and
+          still sync the moment it's back.
+        </p>
+      </div>
+      <div class="bio-photo">
+        <img src="assets/profile.jpg" alt="Wilson Henry Sigana portrait">
+      </div>
+    </div>
+
+    <div class="s-head">How I Work</div>
+    <div class="tag-row">
+      <span class="tag core">Build it for myself first</span>
+      <span class="tag core">Ship fast, iterate live</span>
+      <span class="tag">No unnecessary frameworks</span>
+      <span class="tag">Offline-first, sync when possible</span>
+    </div>
+  </div>
+
+  <!-- PROJECTS -->
+  <div class="page" id="projects">
+    <div class="s-head">Featured Project</div>
+    <div class="project-grid">
+      <div class="project-card featured">
+        <div class="pc-media" id="gallery-main" data-images="assets/dashboard.png,assets/reports.png,assets/services.png,assets/history.png,assets/mpesa-agent.png,assets/ai_insights.png">
+          <img id="gallery-img" src="assets/dashboard.png" alt="GB ICT Solutions Sales Tracker dashboard" loading="lazy">
+          <div class="pc-gallery-dots" id="gallery-dots"></div>
+        </div>
+        <div class="pc-body">
+          <div class="pc-top">
+            <div class="pc-name">GB ICT Solutions Sales Tracker</div>
+            <div class="pc-tag">Flagship</div>
+          </div>
+          <div class="pc-desc">
+            Multi-user POS with Owner/Employee PIN login, AI-powered dashboard
+            insights, M-Pesa &amp; float tracking, monthly reports, service
+            management and full sales history — running live at my own cyber
+            cafe counter.
+          </div>
+          <div class="pc-stack">
+            <span class="pc-chip">Vanilla JS</span>
+            <span class="pc-chip">Supabase</span>
+            <span class="pc-chip">M-Pesa Daraja API</span>
+            <span class="pc-chip">PWA</span>
+            <span class="pc-chip">AI Insights</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="s-head">More Projects</div>
+    <div class="project-grid" id="other-projects">
+
+      <div class="project-card">
+        <div class="pc-media gallery" data-images="assets/siteforge_1.png,assets/siteforge_2.png,assets/siteforge_3.png">
+          <img src="assets/siteforge_1.png" alt="SiteForge Construction Manager dashboard" loading="lazy">
+          <div class="pc-gallery-dots"></div>
+        </div>
+        <div class="pc-body">
+          <div class="pc-top">
+            <div class="pc-name">SiteForge Construction Manager</div>
+            <div class="pc-tag">Client</div>
+          </div>
+          <div class="pc-desc">Materials delivery, project tracking, labour costs, budget vs. spend, and M-Pesa payments for a residential build in Kakamega.</div>
+          <div class="pc-stack"><span class="pc-chip">Vanilla JS</span><span class="pc-chip">M-Pesa API</span><span class="pc-chip">Print Reports</span></div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="pc-media">
+          <img src="assets/riset_pos.png" alt="RISET POS point of sale dashboard" loading="lazy">
+        </div>
+        <div class="pc-body">
+          <div class="pc-top">
+            <div class="pc-name">GB Shop Manager / Retail POS</div>
+            <div class="pc-tag">Live</div>
+          </div>
+          <div class="pc-desc">Multi-user PIN login, top products, low-stock alerts and revenue tracking for retail shop owners.</div>
+          <div class="pc-stack"><span class="pc-chip">PWA</span><span class="pc-chip">Excel Export</span><span class="pc-chip">Supabase</span></div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="pc-media">
+          <img src="assets/mpesa_agent_native.png" alt="M-Pesa Agent Manager dashboard" loading="lazy">
+        </div>
+        <div class="pc-body">
+          <div class="pc-top">
+            <div class="pc-name">M-Pesa Agent Manager</div>
+            <div class="pc-tag">Live</div>
+          </div>
+          <div class="pc-desc">Float & cash tracking, commission logging, deposit/withdrawal transactions and low-float alerts for M-Pesa agent tills.</div>
+          <div class="pc-stack"><span class="pc-chip">Supabase</span><span class="pc-chip">M-Pesa API</span></div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="pc-media">
+          <img src="assets/beauty_manager.png" alt="Beauty Manager Pro dashboard" loading="lazy">
+        </div>
+        <div class="pc-body">
+          <div class="pc-top">
+            <div class="pc-name">Beauty Manager Pro</div>
+            <div class="pc-tag">Client</div>
+          </div>
+          <div class="pc-desc">Booking, inventory, customer records and sales tracking for cosmetic and beauty shops.</div>
+          <div class="pc-stack"><span class="pc-chip">Supabase</span><span class="pc-chip">PWA</span></div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="pc-media">
+          <img src="assets/boda_fix.png" alt="Boda Fix spare parts and repair dashboard" loading="lazy">
+        </div>
+        <div class="pc-body">
+          <div class="pc-top">
+            <div class="pc-name">Boda Fix — Spare Centre &amp; Repair</div>
+            <div class="pc-tag">Client</div>
+          </div>
+          <div class="pc-desc">Parts inventory, repair job tracking, sales and low-stock alerts for a motorcycle spares and repair shop.</div>
+          <div class="pc-stack"><span class="pc-chip">Vanilla JS</span><span class="pc-chip">Supabase</span></div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="pc-media">
+          <img src="assets/autoparts_pro.png" alt="AutoParts Pro dashboard" loading="lazy">
+        </div>
+        <div class="pc-body">
+          <div class="pc-top">
+            <div class="pc-name">AutoParts Pro</div>
+            <div class="pc-tag">Client</div>
+          </div>
+          <div class="pc-desc">Vehicle spare parts inventory, purchase orders, suppliers and stock value tracking for Nairobi auto parts sellers.</div>
+          <div class="pc-stack"><span class="pc-chip">Vanilla JS</span><span class="pc-chip">Supabase</span></div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="pc-media">
+          <img src="assets/barshop_manager.png" alt="BarShop Manager liquor store dashboard" loading="lazy">
+        </div>
+        <div class="pc-body">
+          <div class="pc-top">
+            <div class="pc-name">Divai Manager (BarShop Manager)</div>
+            <div class="pc-tag">Client</div>
+          </div>
+          <div class="pc-desc">POS, Mkopo credit tracking, inventory and low-stock alerts for a Nairobi liquor store.</div>
+          <div class="pc-stack"><span class="pc-chip">Supabase</span><span class="pc-chip">Mkopo Credit</span></div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="pc-media">
+          <img src="assets/history.png" alt="Hotel Bar and Restaurant Manager sales history" loading="lazy">
+        </div>
+        <div class="pc-body">
+          <div class="pc-top">
+            <div class="pc-name">Hotel Bar &amp; Restaurant Manager</div>
+            <div class="pc-tag">Live</div>
+          </div>
+          <div class="pc-desc">Bar, restaurant &amp; guesthouse operations in one system, with full sales history and reporting.</div>
+          <div class="pc-stack"><span class="pc-chip">Vanilla JS</span><span class="pc-chip">Supabase</span></div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="pc-media">
+          <img src="assets/pharmacare_pro.png" alt="PharmaCare Pro pharmacy dashboard" loading="lazy">
+        </div>
+        <div class="pc-body">
+          <div class="pc-top">
+            <div class="pc-name">PharmaCare Pro</div>
+            <div class="pc-tag">Client</div>
+          </div>
+          <div class="pc-desc">Pharmacy stock, sales, expiry tracking and prescription management with low-stock alerts.</div>
+          <div class="pc-stack"><span class="pc-chip">Supabase</span><span class="pc-chip">Expiry Tracking</span></div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="pc-media">
+          <img src="assets/nyumbahub.png" alt="NyumbaHub property management dashboard" loading="lazy">
+        </div>
+        <div class="pc-body">
+          <div class="pc-top">
+            <div class="pc-name">NyumbaHub</div>
+            <div class="pc-tag">Client</div>
+          </div>
+          <div class="pc-desc">Property &amp; tenant management with rent tracking, maintenance requests and revenue reporting for Nairobi landlords.</div>
+          <div class="pc-stack"><span class="pc-chip">Supabase Storage</span><span class="pc-chip">Vanilla JS</span></div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="pc-media placeholder"><span>Screenshot coming soon</span></div>
+        <div class="pc-body">
+          <div class="pc-top">
+            <div class="pc-name">WhatsApp Business Chatbot</div>
+            <div class="pc-tag">Live</div>
+          </div>
+          <div class="pc-desc">Twilio + Groq AI, deployed on Vercel, for customer messaging automation.</div>
+          <div class="pc-stack"><span class="pc-chip">Twilio</span><span class="pc-chip">Groq AI</span><span class="pc-chip">Vercel</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- RESUME -->
+  <div class="page" id="resume">
+    <div class="s-head">Experience</div>
+
+    <div class="tl-item">
+      <div class="tl-date">2023 — Now</div>
+      <div class="tl-body">
+        <div class="tl-title">Founder &amp; Developer</div>
+        <div class="tl-org">GB ICT Solutions · Nairobi</div>
+        <div class="tl-desc">
+          Run a cyber cafe and M-Pesa agency while building and maintaining a
+          portfolio of custom business management systems for retail, hospitality,
+          pharmacy, construction, beauty and property clients across Nairobi.
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-date">Ongoing</div>
+      <div class="tl-body">
+        <div class="tl-title">Freelance Software Developer</div>
+        <div class="tl-org">Client Projects · Nairobi area</div>
+        <div class="tl-desc">
+          Deployed vertical-specific systems including SiteForge (construction),
+          PharmaCare Pro (pharmacy), HotelPlex Manager (hospitality), Beauty
+          Manager Pro, AutoParts Pro, Divai Manager, and NyumbaHub — each with
+          M-Pesa integration and Supabase-backed real-time sync.
+        </div>
+      </div>
+    </div>
+
+    <div class="s-head">Technical Skills</div>
+    <div class="tag-row">
+      <span class="tag core">Vanilla JavaScript</span>
+      <span class="tag core">Supabase</span>
+      <span class="tag core">M-Pesa Daraja API</span>
+      <span class="tag">Progressive Web Apps</span>
+      <span class="tag">GitHub Pages</span>
+      <span class="tag">Netlify</span>
+      <span class="tag">Vercel</span>
+      <span class="tag">Twilio + Groq AI (WhatsApp bots)</span>
+      <span class="tag">Python (build tooling)</span>
+      <span class="tag">SHA-256 auth &amp; activity logging</span>
+      <span class="tag">Excel / PDF export</span>
+    </div>
+
+    <div class="s-head">Core Strengths</div>
+    <div class="tag-row">
+      <span class="tag">Rapid deployment</span>
+      <span class="tag">Payments &amp; POS systems</span>
+      <span class="tag">Offline-first design</span>
+      <span class="tag">Real-world SME tooling</span>
+    </div>
+
+    <div class="r-cta" style="margin-top:36px; justify-content:flex-start;">
+      <button class="btn primary" onclick="window.print()">Download / Print Resume</button>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="page" id="contact">
+    <div class="s-head">Get In Touch</div>
+    <div class="total-block">
+      <div class="total-row"><span>Location</span><span>Nairobi, Kenya</span></div>
+      <div class="total-row"><span>Email</span><span>henrysigana@gmail.com</span></div>
+      <div class="total-row"><span>Phone</span><span>0703 870 468</span></div>
+      <div class="total-row"><span>GitHub</span><span>github.com/henrysigana</span></div>
+      <div class="total-row grand"><span>Let's build something</span><span>→</span></div>
+    </div>
+    <div class="contact-links">
+      <a class="btn primary" href="https://wa.me/254703870468" target="_blank" rel="noopener">WhatsApp Me</a>
+      <a class="btn ghost" href="mailto:henrysigana@gmail.com">Email Me</a>
+      <a class="btn ghost" href="https://github.com/henrysigana" target="_blank" rel="noopener">View GitHub</a>
+    </div>
+
+    <div class="r-barcode">▌│▌││▌│▌▌│▌│▌▌▌│▌│▌▌│▌▌│▌│▌▌▌│▌</div>
+    <div class="r-endnote">THANK YOU FOR VISITING · GB ICT SOLUTIONS · NAIROBI</div>
+  </div>
+
+</div>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightbox-close">&times;</button>
+  <img id="lightbox-img" src="" alt="Full size screenshot">
+</div>
+
+<script>
+  // --- Tab navigation ---
+  const navBtns = document.querySelectorAll('.nav-btn');
+  const pages = document.querySelectorAll('.page');
+
+  function goTo(pageId){
+    pages.forEach(p => p.classList.toggle('active', p.id === pageId));
+    navBtns.forEach(b => b.classList.toggle('active', b.dataset.page === pageId));
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+  navBtns.forEach(btn => btn.addEventListener('click', () => goTo(btn.dataset.page)));
+  document.querySelectorAll('[data-goto]').forEach(el => {
+    el.addEventListener('click', () => goTo(el.dataset.goto));
+  });
+
+  // --- Lightbox ---
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  document.getElementById('lightbox-close').addEventListener('click', () => lightbox.classList.remove('open'));
+  lightbox.addEventListener('click', (e) => { if(e.target === lightbox) lightbox.classList.remove('open'); });
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape') lightbox.classList.remove('open'); });
+
+  function openLightbox(src){
+    lightboxImg.src = src;
+    lightbox.classList.add('open');
+  }
+
+  // --- Multi-image galleries (featured project + SiteForge) ---
+  document.querySelectorAll('.pc-media[data-images]').forEach(media => {
+    const img = media.querySelector('img');
+    const dotsWrap = media.querySelector('.pc-gallery-dots');
+    const images = media.dataset.images.split(',');
+    let idx = 0;
+    let timer;
+
+    images.forEach((src, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'pc-dot' + (i === 0 ? ' active' : '');
+      dot.addEventListener('click', (e) => { e.stopPropagation(); show(i); reset(); });
+      dotsWrap.appendChild(dot);
+    });
+
+    function show(i){
+      idx = i;
+      img.src = images[i];
+      [...dotsWrap.children].forEach((d, di) => d.classList.toggle('active', di === i));
+    }
+    function reset(){
+      clearInterval(timer);
+      timer = setInterval(() => show((idx + 1) % images.length), 4000);
+    }
+    reset();
+
+    media.style.cursor = 'zoom-in';
+    media.addEventListener('click', () => openLightbox(images[idx]));
+  });
+
+  // --- Single-image project cards (click to zoom) ---
+  document.querySelectorAll('.pc-media:not([data-images]):not(.placeholder)').forEach(media => {
+    const img = media.querySelector('img');
+    if(!img) return;
+    media.style.cursor = 'zoom-in';
+    media.addEventListener('click', () => openLightbox(img.src));
+  });
+</script>
+
+</body>
+</html>
